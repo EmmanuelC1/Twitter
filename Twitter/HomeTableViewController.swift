@@ -90,7 +90,7 @@ class HomeTableViewController: UITableViewController {
             
         }, failure: { (Error) in
             //Error message
-            print("Error: Cannot retrive tweets >> \(Error)")
+            print("Error: Cannot retrive tweets (load more tweets)>> \(Error)")
         })
     }
     
