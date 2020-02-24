@@ -35,7 +35,7 @@ class LoginViewController: UIViewController {
             
         }, failure: { (Error) in
             //error message if user failed to login
-            print("Cannot login")
+            print("Error: Cannot login >> \(Error)")
         })
     }
     

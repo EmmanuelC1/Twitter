@@ -17,12 +17,20 @@ class HomeTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Calls loadTweet function
-        loadTweets()
-        
+    
         //RefreshControl calls loadTweet function when user pulls down to refresh
         myRefreshControl.addTarget(self, action: #selector(loadTweets), for: .valueChanged)
         tableView.refreshControl = myRefreshControl
+        //Dynamic table view height
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = 120
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        //Calls loadTweet function
+        loadTweets()
     }
     
     @objc func loadTweets() {
@@ -53,7 +61,7 @@ class HomeTableViewController: UITableViewController {
             
         }, failure: { (Error) in
             //Error message
-            print("Cannot retrive tweets")
+            print("Error: Cannot retrive tweets >> \(Error)")
         })
     }
     
@@ -82,7 +90,7 @@ class HomeTableViewController: UITableViewController {
             
         }, failure: { (Error) in
             //Error message
-            print("Cannot retrive tweets")
+            print("Error: Cannot retrive tweets >> \(Error)")
         })
     }
     
@@ -118,6 +126,15 @@ class HomeTableViewController: UITableViewController {
         if let imageData = data {
             cell.profileImageView.image = UIImage(data: imageData)
         }
+        
+        //Calls setFavorite function to display correct image
+        cell.setFavorite(tweetArray[indexPath.row]["favorited"] as! Bool)
+        //Sets the id of the tweet to tweetID
+        cell.tweetID = tweetArray[indexPath.row]["id"] as! Int
+        
+        //Calls setRetweet function to display correct image
+        cell.setRetweet(tweetArray[indexPath.row]["retweeted"] as! Bool)
+        
         
         return cell
     }
